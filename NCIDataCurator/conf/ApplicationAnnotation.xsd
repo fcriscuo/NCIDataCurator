@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    jaxb:version="2.1" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    jaxb:package="edu.jhu.en605.fcriscu1.generated.annotation"
+    jaxb:extensionBindingPrefixes="xjc">
+    <xs:annotation>
+        <xs:appinfo>
+            <jaxb:globalBindings>
+                <xjc:simple />
+            </jaxb:globalBindings>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:element name="ApplicationAnnotationCollection" >
+        <xs:complexType>
+        <xs:annotation>
+            <xs:documentation>A collection of annotations</xs:documentation>
+        </xs:annotation>
+            <xs:sequence>
+                <xs:element ref="ApplicationAnnotation" minOccurs="0" maxOccurs="unbounded"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ApplicationAnnotation">
+        <xs:complexType>
+            <xs:annotation>
+                <xs:documentation>An annotation related to a specific Gene Entry added by an application user</xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element ref="HugoSymbol"></xs:element>
+                <xs:element name="SequenceNumber" type="xs:int"></xs:element>
+                <xs:element name="DateCreated" type="xs:date"></xs:element>
+                <xs:element ref="ApplicationUser"></xs:element>
+                <xs:element name="AnnotationText" type="xs:string"></xs:element>                
+                <xs:element ref="AnnotationEvidence" minOccurs="0" maxOccurs="unbounded"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="ApplicationUser">
+        <xs:complexType >
+            <xs:annotation>
+                <xs:documentation>The user who entered this annotation</xs:documentation>
+                
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element name="UserID" type="xs:string"></xs:element>
+                <xs:element name="UserName" type="xs:string"></xs:element>
+                <xs:element name="PrimaryEmail" type="xs:string" minOccurs="0"></xs:element>
+                <xs:element name="Active" type="xs:boolean" default="true"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+        </xs:element>
+        <xs:element name="AnnotationEvidence">
+            <xs:complexType >
+                <xs:annotation>
+                    <xs:documentation>The user who entered this annotation</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="EvidenceSource" type="xs:string"></xs:element>
+                    <xs:element name="EvidenceIdentifier" type="xs:string"></xs:element>
+                    <xs:element name="EvidenceURI" type="xs:anyURI" minOccurs="0"></xs:element>
+                    <xs:element name="EvidenceComment" type="xs:string" minOccurs="0"></xs:element>
+                </xs:sequence>
+            </xs:complexType>
+    </xs:element>
+    <xs:element name="HugoSymbol" type="xs:string"></xs:element>
+    
+</xs:schema>

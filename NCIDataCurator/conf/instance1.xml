@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnnotationEvidence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/C:/softwaredev/NCIDataCurator/conf/ApplicationAnnotation.xsd">
+    <EvidenceSource>EvidenceSource0</EvidenceSource>
+    <EvidenceIdentifier>EvidenceIdentifier0</EvidenceIdentifier>
+</AnnotationEvidence>

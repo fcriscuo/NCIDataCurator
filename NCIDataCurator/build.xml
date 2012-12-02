@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="caBIO Demos" basedir="." default="run">
+
+	<description>Build script for Local Client</description>
+
+	<property name="lib.dir" value="lib"/>
+	<property name="build.dir" value="bin"/>
+	<property name="conf.dir" value="conf"/>
+	<property name="src.dir" value="src"/>
+	<property file = "build.properties"/>
+	
+	<!--***********************************************************************
+	*** CLASSPATH AND UNIX-STYLE BASEDIR PROPERTIES
+	*********************************************************************** -->
+	<path id="runtime">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement path="${conf.dir}"/>
+		<pathelement path="${build.dir}"/>
+	</path>
+	
+	<path id="compiletime">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- set basedir.url = basedir as unix style pathname, regardless of platform -->
+	<path id="basedir.path">
+		<pathelement path="${basedir}" />
+	</path>
+
+	
+
+	<macrodef name="SDKecho">
+		<attribute name="message" default="..." />
+		<sequential>
+			<echo>*****************************************************************</echo>
+			<echo>***  @{message}</echo>
+			<echo>*****************************************************************</echo>
+		</sequential>
+	</macrodef>
+	
+	<!--***********************************************************************
+	*** Prepares the directory structure
+	*********************************************************************** -->
+	<target name="init" >
+		<SDKecho message="${ant.project.name}: Preparing directories"/>
+		<mkdir dir="${build.dir}"/>
+	</target>
+
+	<!--***********************************************************************
+	*** Cleans the generated directories and files
+	*********************************************************************** -->
+	<target name="clean" description="Cleans the generated directories and files">
+		<SDKecho message="${ant.project.name}: Cleaning directories and files"/>
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<!--***********************************************************************
+	*** Compiles the classes
+	*********************************************************************** -->
+	<target name="compile" depends="init" description="Compiles the generated beans">
+		<SDKecho message="${ant.project.name}: Compiling the generated beans"/>
+		<javac srcdir="${src.dir}" destdir="${build.dir}" debug="true">
+			<include name="**/*.java"/>
+			<classpath refid="compiletime"/>
+		</javac>
+	</target>
+	
+	<!--***********************************************************************
+		*** Generates JAXB classes for UniProt
+		*** Must invoke target directly
+		*********************************************************************** -->
+	<target name="generate-uniprot-xjc" description="Generate Uniprot classes with JAXB" > 
+		
+	  	<exec dir="." executable="${xjc_exe}">
+	  		<arg line="-p org.uniprot.jaxb.generated
+	  			-d src http://www.uniprot.org/support/docs/uniprot.xsd"/>
+	  	</exec>
+	     <echo>
+	 		JAXB Classes for UniProt generated
+	 	</echo>
+	    </target>  
+	
+	<!--***********************************************************************
+			*** Generates JAXB classes for SequenceReference object
+			*** Must invoke target directly
+			*********************************************************************** -->
+		<target name="generate-sequenceref-xjc" description="Generate Uniprot classes with JAXB" > 
+			
+		  	<exec dir="." executable="${xjc_exe}">
+		  		<arg line="-p edu.jhu.fcriscu1.ncidc.generated.sequenceref
+		  			-extension
+		  			-d src 
+		  			C:\softwaredev\NCIDataCurator\conf\SequenceReference.xsd"/>
+		  	</exec>
+		     <echo>
+		 		JAXB Classes for Sequence Reference generated
+		 	</echo>
+		    </target>  
+
+	<!--***********************************************************************
+				*** Generates JAXB classes for ApplicationAnnotation object
+				*** Must invoke target directly
+				*********************************************************************** -->
+			<target name="generate-appannotation-xjc" description="Generate Annotation classes with JAXB" > 
+				
+			  	<exec dir="." executable="${xjc_exe}">
+			  		<arg line="-p edu.jhu.fcriscu1.ncidc.generated.annotation
+			  			-extension
+			  			-d src 
+			  			C:\softwaredev\NCIDataCurator\conf\ApplicationAnnotation.xsd"/>
+			  	</exec>
+			     <echo>
+			 		JAXB Classes for Application Annotation generated
+			 	</echo>
+			    </target>  
+
+	<!--***********************************************************************
+					*** Generates JAXB classes for Medline object
+					*** Schema generated  from sample pubmed XML file downloaded from EMBL
+					*** Must invoke target directly
+					*********************************************************************** -->
+				<target name="generate-medline-xjc" description="Generate Medline classes with JAXB" > 
+					
+				  	<exec dir="." executable="${xjc_exe}">
+				  		<arg line="-p gov.nih.nlm.ncbi.generated.medline
+				  			-extension
+				  			-d src 
+				  			C:\softwaredev\NCIDataCurator\conf\nlmmedlinecitationset.xsd"/>
+				  	</exec>
+				     <echo>
+				 		JAXB Classes for Medline generated
+				 	</echo>
+				    </target>  
+	
+	<!--***********************************************************************
+						*** Generates JAXB classes for ReferenceReference object
+						*** 
+						*** Must invoke target directly
+						*********************************************************************** -->
+					<target name="generate-refref-xjc" description="Generate ReferenceReference classes with JAXB" > 
+						
+					  	<exec dir="." executable="${xjc_exe}">
+					  		<arg line="-p edu.jhu.en605.fcriscu1.ncidc.generated.referenceref
+					  			-extension
+					  			-d src 
+					  			C:\softwaredev\NCIDataCurator\conf\ReferenceReference.xsd"/>
+					  	</exec>
+					     <echo>
+					 		JAXB Classes for PubMed generated
+					 	</echo>
+					    </target>  
+		
+	
+	<!--***********************************************************************
+	*** Runs the Test 
+	*********************************************************************** -->
+	<target name="run" depends="compile" description="Runs the test">
+		<SDKecho message="${ant.project.name}: Running the test"/>
+		<java classname="TestClient" fork="true">
+			<classpath refid="runtime" />
+		</java>
+	</target>
+	
+	<!-- *******************************************************************-->
+	<!-- Run XML Utility Demo                                               -->
+	<!-- *******************************************************************-->
+	<target name="runXML" depends="compile" description="Runs the XML Utility test">
+		<SDKecho message="${ant.project.name}: Running the XML Utility test"/>
+		<mkdir dir="./output"/>
+		<java classname="TestXMLClient" fork="true" maxmemory="512m">
+			<classpath refid="runtime" />
+		</java>
+	</target>
+	
+	<!-- ********************************************************************-->
+	<!--    Targets for running caBIO demos                                  -->
+	<!-- ********************************************************************-->
+
+	<target name="runSearch" depends="compile" description="Runs the FreestyleLM test">
+		<java classname="TestFreestyleLM" fork="true" maxmemory="512m">
+			<classpath refid="runtime" />
+		</java>
+	</target>
+
+	<target name="runxmldemo" depends="compile" description="Runs the XML demo">
+		<java classname="TestXML" fork="true" maxmemory="512m">
+			<classpath refid="runtime" />
+		</java>
+	</target>
+
+	<target name="runsvgdemo" depends="compile" description="Runs the SVG demo">
+		<java classname="TestSVG" fork="true" maxmemory="512m">
+			<classpath refid="runtime" />
+		</java>
+	</target>
+
+	<target name="runcqldemo" depends="compile" description="Runs the CQL demo">
+		<java classname="TestCQL" fork="true" maxmemory="512m">
+			<classpath refid="runtime" />
+		</java>
+	</target>
+
+	<target name="rundemo" depends="compile" description="Runs the examples in the Programmer's Guide">
+		<java classname="TechGuideExamples" fork="true" maxmemory="512m">
+			<classpath refid="runtime" />
+		</java>
+	</target>
+	
+	<!--***********************************************************************
+	*** Dumps the properties of the build script
+	*********************************************************************** -->
+	<target name="show-properties" description="Dumps a list of all properties currently set">
+		<echoproperties destfile="antproperties.txt"/>
+		<echo>Properties were dumped to 'antproperties.txt'</echo>
+	</target>
+	
+</project>

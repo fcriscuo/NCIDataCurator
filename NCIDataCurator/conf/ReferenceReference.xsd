@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    jaxb:version="2.1" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    jaxb:extensionBindingPrefixes="xjc">
+    <xs:annotation>
+        <xs:appinfo>
+            <jaxb:globalBindings>
+                <xjc:simple />
+            </jaxb:globalBindings>
+        </xs:appinfo>
+    </xs:annotation>
+    <xs:element name="ReferenceReference">
+        <xs:complexType>
+            <xs:annotation>
+                <xs:documentation>The redundant name is maintained for consistency with similar objects</xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element ref="ReferenceReferenceIdentifier"></xs:element> 
+                <xs:element ref="HugoSymbol"></xs:element>
+                <xs:element ref="PubMedFlag"></xs:element>
+                <xs:element ref="ReferenceType"></xs:element>         
+                <xs:element ref="LastRetrievalDate"></xs:element>
+                <xs:element ref="ReferenceProvenanceChain"></xs:element>
+                <xs:element ref="RetrievedReferenceEntry"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="RetrievedReferenceEntry">
+        <xs:complexType>
+            <xs:annotation>
+                <xs:documentation>The complete reference entry as retrieved from the source in XML format</xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element name="ReferenceEntryXML" type="xs:anyType"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="ReferenceReferenceIdentifier">
+        <xs:complexType >
+            <xs:annotation>
+                <xs:documentation>The primary key for the reference reference</xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element ref="ReferenceType"></xs:element>
+                <xs:element name="ReferenceID" type="xs:string"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="ReferenceType">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="PubMed"></xs:enumeration>
+                <xs:enumeration value="Medline"></xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="HugoSymbol" type="xs:string"></xs:element>
+    <xs:element name="PubMedFlag" type="xs:boolean" default="true"></xs:element>
+    <xs:element name="ReferenceSource">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="EMBL"></xs:enumeration>
+                <xs:enumeration value="NCBI"></xs:enumeration>
+                <xs:enumeration value="TogoWS"></xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="LastRetrievalDate" type="xs:date"></xs:element>
+    
+    <xs:element name="ReferenceProvenanceChain">
+        <xs:annotation>
+            <xs:documentation>The source of this reference data</xs:documentation>
+            <xs:documentation>This is a recursive structure supporting a  reference chain to the original source</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element  ref="ReferenceSource"></xs:element>
+                <xs:element name="ReferenceDataset" type="xs:string" minOccurs="0"></xs:element>       
+                <xs:element name="SourceURL" type="xs:anyURI" minOccurs="0"></xs:element>
+                <xs:element name="PrimarySource" type="xs:boolean" default="true"></xs:element>      
+                <xs:element ref="ReferenceProvenanceChain" minOccurs="0" maxOccurs="2"></xs:element>
+            </xs:sequence>  
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

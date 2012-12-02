@@ -1,0 +1,51 @@
+<!-- DTD for Cancer Index Disease Deliverable -->
+<!ELEMENT GeneEntryCollection (GeneEntry+)>
+
+<!ELEMENT GeneEntry (HUGOGeneSymbol, GeneAliasCollection, SequenceIdentificationCollection, GeneStatusFlag, Sentence*)>
+
+<!ELEMENT HUGOGeneSymbol (#PCDATA)>
+
+<!ELEMENT GeneAliasCollection (GeneAlias+)>
+<!ELEMENT GeneAlias (#PCDATA)>
+
+<!ELEMENT SequenceIdentificationCollection (HgncID, LocusLinkID, GenbankAccession, RefSeqID, UniProtID)>
+<!ELEMENT HgncID (#PCDATA)>
+<!ELEMENT LocusLinkID (#PCDATA)>
+<!ELEMENT GenbankAccession (#PCDATA)>
+<!ELEMENT RefSeqID (#PCDATA)>
+<!ELEMENT UniProtID (#PCDATA)>
+
+<!ELEMENT GeneStatusFlag (#PCDATA)>
+
+<!ELEMENT Sentence (GeneData, DiseaseData, Statement, PubMedID, Organism, NegationIndicator, CellineIndicator, Comments?, EvidenceCode*, Roles*, SentenceStatusFlag)>
+
+
+<!ELEMENT GeneData (MatchedGeneTerm, NCIGeneConceptCode)>
+<!ELEMENT MatchedGeneTerm (#PCDATA)>
+<!ELEMENT NCIGeneConceptCode (#PCDATA)>
+
+<!ELEMENT DiseaseData (MatchedDiseaseTerm, NCIDiseaseConceptCode)>
+<!ELEMENT MatchedDiseaseTerm (#PCDATA)>
+<!ELEMENT NCIDiseaseConceptCode (#PCDATA)>
+
+<!ELEMENT Statement (#PCDATA)>
+<!ELEMENT PubMedID (#PCDATA)>
+<!ELEMENT Organism (#PCDATA)> 
+<!ELEMENT NegationIndicator (#PCDATA)>
+<!ELEMENT CellineIndicator (#PCDATA)>
+<!ELEMENT Comments  (#PCDATA)>
+
+<!ELEMENT EvidenceCode (#PCDATA)>
+
+<!ELEMENT Roles (PrimaryNCIRoleCode*, OtherRole*)>
+<!ELEMENT PrimaryNCIRoleCode (#PCDATA)>
+<!ELEMENT OtherRole (#PCDATA)>
+
+<!ELEMENT SentenceStatusFlag (#PCDATA)>
+
+
+
+
+
+
+

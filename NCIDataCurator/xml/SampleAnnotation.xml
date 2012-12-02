@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApplicationAnnotation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/C:/softwaredev/NCIDataCurator/conf/ApplicationAnnotation.xsd">
+    <HugoSymbol>HugoSymbol0</HugoSymbol>
+    <SequenceNumber>0</SequenceNumber>
+    <DateCreated>2006-05-04</DateCreated>
+    <ApplicationUser>
+        <UserID>UserID0</UserID>
+        <UserName>UserName0</UserName>
+        <Active>true</Active>
+    </ApplicationUser>
+    <AnnotationText>AnnotationText0</AnnotationText>
+</ApplicationAnnotation>

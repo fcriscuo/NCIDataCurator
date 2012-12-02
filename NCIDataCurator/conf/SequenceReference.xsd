@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    jaxb:version="2.1" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    jaxb:extensionBindingPrefixes="xjc">
+    <xs:annotation>
+        <xs:appinfo>
+            <jaxb:globalBindings>
+                <xjc:simple />
+            </jaxb:globalBindings>
+        </xs:appinfo>
+    </xs:annotation>
+ <xs:element name="SequenceReference">
+<xs:complexType>
+    <xs:annotation>
+        <xs:documentation>The sequence from the retrieved data is copied to the common area to facilitate access for sequuence-based services"UniProt</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element ref="SequenceReferenceIdentifier"></xs:element> 
+        <xs:element ref="HugoSymbol"></xs:element>
+        <xs:element ref="SequenceType"></xs:element>         
+        <xs:element ref="LastRetrievalDate"></xs:element>
+        <xs:element ref="SequenceProvenanceChain"></xs:element>
+        <xs:element ref="Sequence"></xs:element>
+        <xs:element ref="RetrievedSequenceEntry"></xs:element>
+    </xs:sequence>
+</xs:complexType>
+</xs:element>
+  
+    <xs:element name="RetrievedSequenceEntry">
+<xs:complexType>
+    <xs:annotation>
+        <xs:documentation>The complete entry retrieved from the source in XML format</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="SequenceEntryXML" type="xs:anyType"></xs:element>
+    </xs:sequence>
+</xs:complexType>
+    </xs:element>
+    
+    
+  <xs:element name="SequenceReferenceIdentifier">
+  <xs:complexType >
+        <xs:annotation>
+            <xs:documentation>The primary key for the sequence reference</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="SequenceSource"></xs:element>
+            <xs:element name="AccessionID" type="xs:string"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    </xs:element>
+<xs:element name="SequenceType">
+    <xs:simpleType>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Nucleotide"></xs:enumeration>
+            <xs:enumeration value="Protein"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:element>
+    <xs:element name="HugoSymbol" type="xs:string"></xs:element>
+    <xs:element name="SequenceSource">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="UniProt"></xs:enumeration>
+                <xs:enumeration value="GenBank"></xs:enumeration>
+                <xs:enumeration value="TogoWS"></xs:enumeration>
+                <xs:enumeration value="EMBL"></xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+   <xs:element name="LastRetrievalDate" type="xs:date"></xs:element>
+   <xs:element name="Sequence" type="xs:string"></xs:element>
+    <xs:element name="SequenceProvenanceChain">
+        <xs:annotation>
+            <xs:documentation>The source of this sequence data</xs:documentation>
+            <xs:documentation>This is a recursive structure supporting a  reference chain to the original source</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+        <xs:sequence>
+           <xs:element  ref="SequenceSource"></xs:element>
+            <xs:element name="SequenceDataset" type="xs:string" minOccurs="0"></xs:element>       
+           <xs:element name="SourceURL" type="xs:anyURI" minOccurs="0"></xs:element>
+           <xs:element name="PrimarySource" type="xs:boolean" default="true"></xs:element>      
+            <xs:element ref="SequenceProvenanceChain" minOccurs="0" maxOccurs="2"></xs:element>
+        </xs:sequence>  
+    </xs:complexType>
+    </xs:element>
+   
+   
+
+</xs:schema>
+
